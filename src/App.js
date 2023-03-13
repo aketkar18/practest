@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [statements, setStatements] = useState(["", "", ""]);
   const [quiz, setQuiz] = useState(null);
+  const [clicked, setClicked] = useState([false, false, false]);
 
   const handleChange = (event, index) => {
     const newStatements = [...statements];
@@ -29,8 +30,8 @@ function App() {
 
   return (
     <div>
-        <div className="header bg-dark py-4">
-          <h1 className="text-white text-center display-1" style={{ fontFamily: "'Roboto', sans-serif ", fontWeight: "bold" }}>Practest</h1>
+        <div className="header bg-dark py-5">
+          <h1 className="text-white text-center display-1" style={{ fontFamily: "'Roboto', sans-serif", fontWeight: "bold" }}>Practest</h1>
         </div>
       <div className="container-fluid px-5">
       <div style={{margin: "20px"}}>
@@ -93,8 +94,17 @@ function App() {
                   {question.choices.map((choice, index) => {
                     var choices = ['A', 'B', 'C', 'D','E']
                     const isCorrect = choices[index] === question.answer;
-                    const className = isCorrect ? "answer-choice correct" : "answer-choice incorrect";
-                    const onClick = isCorrect ? null : () => alert(question.explanation);
+                    const className = `answer-choice ${clicked[key-1] ? (isCorrect ? 'correct' : 'incorrect') : ''}`;
+                    const onClick = () => {
+                      setClicked(prevClicked => {
+                        const newClicked = { ...prevClicked };
+                        newClicked[key-1] = true;
+                        return newClicked;
+                      });
+                      if (!isCorrect) {
+                        alert(question.explanation);
+                      }
+                    };                    
                     return (
                       <li key={index} className={className} onClick={onClick}>
                         {choice}
