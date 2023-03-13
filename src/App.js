@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [statements, setStatements] = useState(["", "", ""]);
+  const [topics, setTopics] = useState(["", "", ""]);
   const [quiz, setQuiz] = useState(null);
   const [clicked, setClicked] = useState([false, false, false]);
 
   const handleChange = (event, index) => {
-    const newStatements = [...statements];
-    newStatements[index] = event.target.value;
-    setStatements(newStatements);
+    const newTopics = [...topics];
+    newTopics[index] = event.target.value;
+    console.log(newTopics)
+    setTopics(newTopics);
   };
   
   const handleSubmit = async (event) => {
@@ -20,11 +21,11 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ statements }),
+      body: JSON.stringify({ topics }),
     });
 
     const quizData = await response.json();
-    // console.log(quizData);
+    console.log(quizData);
     setQuiz(quizData);
   };
 
@@ -32,39 +33,40 @@ function App() {
     <div>
         <div className="header bg-dark py-5">
           <h1 className="text-white text-center display-1" style={{ fontFamily: "'Roboto', sans-serif", fontWeight: "bold" }}>Practest</h1>
+          <h6 className="text-white text-center" style={{ fontFamily: "'Roboto', sans-serif", fontWeight: "bold" }}>GPT-3 Powered Practice Tests</h6>
         </div>
       <div className="container-fluid px-5">
       <div style={{margin: "20px"}}>
-        <p className="text-center">Enter statements from your notes in the boxes below to generate a quiz using the statements.</p>
+        <p className="text-center">Enter topics from your notes in the boxes below to generate a quiz using the topics.</p>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="statement1">Statement 1</label>
+          <label htmlFor="topic1">Topic 1</label>
           <input
             type="text"
             className="form-control"
-            id="statement1"
-            value={statements[0]}
+            id="topic1"
+            value={topics[0]}
             onChange={(event) => handleChange(event, 0)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="statement2">Statement 2</label>
+          <label htmlFor="topic2">Topic 2</label>
           <input
             type="text"
             className="form-control"
-            id="statement2"
-            value={statements[1]}
+            id="topic2"
+            value={topics[1]}
             onChange={(event) => handleChange(event, 1)}
           />
         </div>
         <div className="form-group">
-          <label htmlFor="statement3">Statement 3</label>
+          <label htmlFor="topic3">Topic 3</label>
           <input
             type="text"
             className="form-control"
-            id="statement3"
-            value={statements[2]}
+            id="topic3"
+            value={topics[2]}
             onChange={(event) => handleChange(event, 2)}
           />
         </div>
