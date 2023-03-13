@@ -10,7 +10,7 @@ function App() {
     newStatements[index] = event.target.value;
     setStatements(newStatements);
   };
-
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -23,12 +23,19 @@ function App() {
     });
 
     const quizData = await response.json();
-    console.log(quizData);
+    // console.log(quizData);
     setQuiz(quizData);
   };
 
   return (
-    <div className="container mt-5">
+    <div>
+        <div className="header bg-dark py-4">
+          <h1 className="text-white text-center display-1" style={{ fontFamily: "'Roboto', sans-serif ", fontWeight: "bold" }}>Practest</h1>
+        </div>
+      <div className="container-fluid px-5">
+      <div style={{margin: "20px"}}>
+        <p className="text-center">Enter statements from your notes in the boxes below to generate a quiz using the statements.</p>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="statement1">Statement 1</label>
@@ -60,29 +67,47 @@ function App() {
             onChange={(event) => handleChange(event, 2)}
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-3">
+        <div className="text-center mt-3">
+        <button type="submit" className="btn btn-primary mt-4" style={{ 
+          backgroundColor: '#008CBA',
+          borderColor: '#008CBA',
+          color: '#fff',
+          borderRadius: '5px',
+          padding: '10px 20px',
+          fontWeight: 'bold',
+          fontSize: '1rem'
+        }}>
           Generate Quiz
         </button>
+        </div>
       </form>
+      </div>
       {quiz && (
-        <div className="mt-5">
+        <div className="container mt-5 mx-auto px-3"> 
           {Object.keys(quiz).map((key) => {
             const question = quiz[key];
             return (
               <div key={key}>
                 <h5>{question.question}</h5>
                 <ul>
-                  {question.choices.map((choice, index) => (
-                    <li key={index}>{choice}</li>
-                  ))}
+                  {question.choices.map((choice, index) => {
+                    var choices = ['A', 'B', 'C', 'D','E']
+                    const isCorrect = choices[index] === question.answer;
+                    const className = isCorrect ? "answer-choice correct" : "answer-choice incorrect";
+                    const onClick = isCorrect ? null : () => alert(question.explanation);
+                    return (
+                      <li key={index} className={className} onClick={onClick}>
+                        {choice}
+                      </li>
+                    );
+                  })}
                 </ul>
-                <p>Answer: {question.answer}</p>
-                <p>{question.explanation}</p>
               </div>
             );
           })}
         </div>
-      )}
+)}
+
     </div>
   );
 }
