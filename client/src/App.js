@@ -9,14 +9,13 @@ function App() {
   const handleChange = (event, index) => {
     const newTopics = [...topics];
     newTopics[index] = event.target.value;
-    console.log(newTopics)
     setTopics(newTopics);
   };
   
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("https://practest.herokuapp.com/", {
+    const response = await fetch("http://localhost:8000/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +27,7 @@ function App() {
     console.log(quizData);
     setQuiz(quizData);
   };
-
+  
   return (
     <div>
         <div className="header bg-dark py-5">
