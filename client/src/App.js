@@ -15,7 +15,7 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:8000/", {
+    const response = await fetch("https://practest-server.herokuapp.com/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
