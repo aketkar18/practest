@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: 'https://practest.herokuapp.com/',
+  origin: 'https://practest.herokuapp.com',
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
@@ -22,9 +22,6 @@ app.get('/', async (req, res) => {
 
 // Handle POST requests to the /quiz path
 app.post('/quiz', async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://practest.herokuapp.com/');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   const { topics } = req.body;
   console.log("Received request with topics: ");
   console.log(topics);
