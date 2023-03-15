@@ -6,9 +6,13 @@ const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+
 app.use(cors({
-    origin: 'https://practest.herokuapp.com/'
+  origin: 'https://practest.herokuapp.com/',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
+
 
 // Handle GET requests to the root path
 app.get('/', async (req, res) => {
