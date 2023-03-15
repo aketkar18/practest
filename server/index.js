@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://practest.herokuapp.com']
+    origin: 'https://practest.herokuapp.com/'
 }));
 
 app.post('/', async (req, res) => {
