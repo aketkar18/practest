@@ -7,6 +7,25 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+async function hello_world() {
+  let prompt = "Write a haiku about the hello world program that programmers write to test their code.";
+  let result = "";
+  const messages = [
+    { role: 'user', content: prompt },
+  ];
+  try {
+    const response = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages,
+    });
+
+    result = response.data.choices[0].message.content;
+  } catch (error) {
+    console.log(error);
+  }
+  return result;
+}
+
 async function make_quiz(topics) {
   let prompt = "I need to make a multiple choice exam. I am going to give you a list of facts and I want you to make a multiple choice questions for each fact. The questions should have 5 answer choices, one of which is correct, but be sure to not make the same letter the answer in a row too much. Give the all the questions and their answer choices first in a list, then start a new list for the correct answers, and finally the explanations in a list. Clearly label these lists as Questions, Answers, or Explanations. There should be exactly" + topics.length + "questions. Here are the facts: ";
   for (let i = 0; i < topics.length; i++) {
@@ -68,4 +87,5 @@ async function make_quiz(topics) {
 
 module.exports = {
   make_quiz,
+  hello_world
 };

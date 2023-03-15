@@ -1,5 +1,6 @@
 const express = require('express');
 const { make_quiz } = require('./server');
+const { hello_world } = require('./server');
 const cors = require('cors');
 
 const app = express();
@@ -9,7 +10,14 @@ app.use(cors({
     origin: 'https://practest.herokuapp.com/'
 }));
 
-app.post('/', async (req, res) => {
+// Handle GET requests to the root path
+app.get('/', async (req, res) => {
+  let result = await hello_world();
+  res.send(result);
+});
+
+// Handle POST requests to the /quiz path
+app.post('/quiz', async (req, res) => {
   const { topics } = req.body;
   console.log("Received request with topics: ");
   console.log(topics);
@@ -17,6 +25,7 @@ app.post('/', async (req, res) => {
   console.log(result);
   res.json(result);
 });
+
 
 const PORT = process.env.PORT || 8000;
 
