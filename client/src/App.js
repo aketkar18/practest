@@ -14,8 +14,13 @@ function App() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+    let apiUrl = "https://practest-server.herokuapp.com/quiz";
 
-    const response = await fetch("https://practest-server.herokuapp.com/quiz", {
+    if (process.env.NODE_ENV === "development") {
+      apiUrl = "http://localhost:8000/quiz";
+    }
+
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
