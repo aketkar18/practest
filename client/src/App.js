@@ -66,7 +66,7 @@ function App() {
             fontWeight: "bold",
           }}
         >
-          ChatGPT Powered Practice Tests
+          GPT-4 Powered Practice Tests
         </h6>
       </div>
       <div className="container-fluid px-5">
