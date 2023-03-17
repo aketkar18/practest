@@ -36,7 +36,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
               })}
             </ul>
             {explanations[key - 1] && (
-              <p className={`explanation ${explanations[key - 1].isCorrect ? 'text-success' : 'text-danger'}`}>
+              <p className={`explanation ${explanations[key - 1].isCorrect ? 'text-correct' : 'text-incorrect'}`}>
               {explanations[key - 1].explanation}{explanations[key - 1]}
               </p>
             )}
