@@ -2,11 +2,17 @@ import React, { useState } from "react";
 
 function Quiz({ quiz, onAnswer, clicked }) {
   const [explanations, setExplanations] = useState(Array(quiz.length).fill(null));
+  const [correct, setCorrect] = useState(Array(quiz.length).fill(null));
 
-  const handleAnswerClick = (key, explanation) => {
+  const handleAnswerClick = (key, explanation, isCorrect) => {
     const newExplanations = [...explanations];
     newExplanations[key - 1] = explanation;
     setExplanations(newExplanations);
+
+    const newCorrect = [...correct];
+    newCorrect[key - 1] = isCorrect;
+    setCorrect(newCorrect);
+
     onAnswer(key);
   };
 
@@ -28,7 +34,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
                   <li
                     key={index}
                     className={className}
-                    onClick={() => handleAnswerClick(key, question.explanation)}
+                    onClick={() => handleAnswerClick(key, question.explanation, isCorrect)}
                   >
                     {choice}
                   </li>
@@ -36,7 +42,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
               })}
             </ul>
             {explanations[key - 1] && (
-              <p className={`explanation ${explanations[key - 1].isCorrect ? 'text-correct' : 'text-incorrect'}`}>
+              <p className={`explanation ${correct[key-1] ? 'text-correct' : 'text-incorrect'}`}>
               {explanations[key - 1].explanation}{explanations[key - 1]}
               </p>
             )}

@@ -30,7 +30,8 @@ async function hello_world() {
 }
 
 async function make_quiz(topics) {
-  let prompt = "I need to make a multiple choice exam. I am going to give you a list of topics and I want you to make one college level multiple choice question for each topic. The questions should have 5 answer choices, only one of which is correct. Give the all the questions and their answer choices first in a list, then start a new list for the correct answers, and finally the explanations. Clearly label these lists as Questions, Answers, or Explanations. There should be exactly" + topics.length + " questions. Prioritize having enough space to include the Answer section written over long questions. Here are the topics: ";
+  let prompt = "Create a difficult MCQ with " + topics.length + " questions. Provide the questions with their 5 answer choices first in a list, then a new list for answers, then a list for very short explanations. Clearly label them 'Questions', 'Answers', or 'Explanations'. Topics: "
+
   for (let i = 0; i < topics.length; i++) {
     prompt += topics[i] + "\n";
   }
@@ -77,13 +78,10 @@ async function make_quiz(topics) {
         current["choices"] = choices;
         practiceTest[n] = current;
       }
-    } else if (currentSection === "answers") {
-      let a = Number(section[0]);
-      practiceTest[a]["answer"] = section.slice(3);
-    } else if (currentSection === "explanations") {
-      let e = Number(section[0]);
-      practiceTest[e]["explanation"] = section.slice(3);
-    }
+    } else {
+      let i = Number(section[0]);
+      practiceTest[i][currentSection] = section.slice(3);
+    } 
   }
   return practiceTest;
 }
