@@ -48,6 +48,13 @@ code {
   background-color: #f5c6cb;
 }
 
+.text-correct {
+  color: green;
+}
+
+.text-incorrect {
+  color: red;
+}
 
 
 

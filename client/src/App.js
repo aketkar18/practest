@@ -39,16 +39,12 @@ function App() {
     setIsLoading(false);
   };
 
-  const handleAnswer = (questionIndex, isCorrect, explanation) => {
+  const handleAnswer = (questionIndex) => {
     setClicked((prevClicked) => {
       const newClicked = { ...prevClicked };
       newClicked[questionIndex - 1] = true;
       return newClicked;
     });
-
-    if (!isCorrect) {
-      alert(explanation);
-    }
   };
 
   return (
