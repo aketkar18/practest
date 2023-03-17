@@ -22,9 +22,9 @@ function App() {
 
     let apiUrl = "https://practest-server.herokuapp.com/quiz";
 
-    if (process.env.NODE_ENV === "development") {
-      apiUrl = "http://localhost:8000/quiz";
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   apiUrl = "http://localhost:8000/quiz";
+    // }
 
     const response = await fetch(apiUrl, {
       method: "POST",
