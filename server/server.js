@@ -46,7 +46,7 @@ async function make_quiz(topics) {
     });
 
     const completion = response.data.choices[0].message.content;
-    console.log(completion);
+    //console.log(completion);
     sections = completion.split('\n');
   } catch (error) {
     console.log(error);
@@ -60,7 +60,7 @@ async function make_quiz(topics) {
 
   for (let i = 0; i < sections.length; i++) {
     let section = sections[i];
-    console.log(section);
+    //console.log(section);
     if (section.trim() === "") {
       continue;
     } else if (section.endsWith(":")) {
