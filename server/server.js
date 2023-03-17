@@ -78,10 +78,13 @@ async function make_quiz(topics) {
         current["choices"] = choices;
         practiceTest[n] = current;
       }
-    } else {
-      let i = Number(section[0]);
-      practiceTest[i][currentSection] = section.slice(3);
-    } 
+    } else if (currentSection === "answers") {
+      let a = Number(section[0]);
+      practiceTest[a]["answer"] = section.slice(3);
+    } else if (currentSection === "explanations") {
+      let e = Number(section[0]);
+      practiceTest[e]["explanation"] = section.slice(3);
+    }
   }
   return practiceTest;
 }

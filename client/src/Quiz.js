@@ -26,7 +26,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
             <ul>
               {question.choices.map((choice, index) => {
                 var choices = ["a", "b", "c", "d", "e"];
-                const isCorrect = choices[index] === question.answer.toLowerCase();
+                const isCorrect = choices[index] === question.answer;
                 const className = `answer-choice ${
                   clicked[key - 1] ? (isCorrect ? "correct" : "incorrect") : ""
                 }`;
