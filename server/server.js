@@ -9,6 +9,7 @@ const configuration = new Configuration({
 });
 
 const openai = new OpenAIApi(configuration);
+let numChoices = 5;
 
 async function hello_world() {
   let prompt = "Write a haiku about the hello world program that programmers write to test their code.";
@@ -16,22 +17,19 @@ async function hello_world() {
   const messages = [
     { role: 'user', content: prompt },
   ];
-  try {
-    const response = await openai.createChatCompletion({
-      model: 'gpt-4',
-      messages,
-    });
 
-    result = response.data.choices[0].message.content;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await openai.createChatCompletion({
+    model: 'gpt-4',
+    messages,
+  });
+
+  result = response.data.choices[0].message.content;
+
   return result;
 }
 
 async function make_quiz(topics) {
-  let prompt = "Create a difficult MCQ with " + topics.length + " questions. Provide the questions with their 5 answer choices first in a list, then a new list for answers, then a list for very short explanations. Clearly label them 'Questions', 'Answers', or 'Explanations'. Topics: "
-
+  let prompt = "Create a college-level multiple choice quiz with " + topics.length + " questions. Respond with a clear nested list with the questions and their " + numChoices + " lettered answer choices, but the correct answer should be marked by adding a @ as its last char. After all question, start a new list for extremly short explanations for each question. The two lists you respond with should be clearly labeled Questions or Explanations. Topics:\n"
   for (let i = 0; i < topics.length; i++) {
     prompt += topics[i] + "\n";
   }
@@ -40,50 +38,43 @@ async function make_quiz(topics) {
     { role: 'user', content: prompt },
   ];
 
-  try {
-    const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo',
-      messages,
-    });
+  const response = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages,
+  });
 
-    const completion = response.data.choices[0].message.content;
-    //console.log(completion);
-    sections = completion.split('\n');
-  } catch (error) {
-    console.log(error);
-  }
+  const completion = response.data.choices[0].message.content;
+  sections = completion.split('\n');
 
   let practiceTest = {};
-  let current = {};
-  let choices = [];
-  let currentSection = "";
-  let n = 0;
+  let q = 1;
 
   for (let i = 0; i < sections.length; i++) {
-    let section = sections[i];
-    //console.log(section);
-    if (section.trim() === "") {
+    let section = sections[i].trim();
+    if (section == "") {
       continue;
-    } else if (section.endsWith(":")) {
-      currentSection = section.slice(0, -1).toLowerCase();
-      continue;
-    } else if (currentSection === "questions") {
-      if (section.endsWith("?")) {
-        n = Number(section[0]);
-        current = {};
-        choices = [];
-        current["question"] = section.slice(3);
-      } else {
-        choices.push(section);
-        current["choices"] = choices;
-        practiceTest[n] = current;
+    }
+    else if (section.endsWith('?')) {
+      practiceTest[q] = {
+        question: section.slice(3),
+        choices: [],
+        answer: "",
+        explanation: ""
+      };
+      i++;
+      var target = i + numChoices;
+      for (i; i < target; i++) {
+        var choice = sections[i];
+        if (choice.includes("@")) {
+          choice = choice.replace("@", "");
+          practiceTest[q]["answer"] = choice[0];
+        }
+        practiceTest[q]["choices"].push(choice);
       }
-    } else if (currentSection === "answers") {
-      let a = Number(section[0]);
-      practiceTest[a]["answer"] = section.slice(3);
-    } else if (currentSection === "explanations") {
-      let e = Number(section[0]);
-      practiceTest[e]["explanation"] = section.slice(3);
+      q++;
+    }
+    else if (q > topics.length && !isNaN(Number(section[0]))) {
+      practiceTest[Number(section[0])]["explanation"] = section.slice(3);
     }
   }
   return practiceTest;

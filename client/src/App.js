@@ -22,10 +22,6 @@ function App() {
 
     let apiUrl = "https://practest-server.herokuapp.com/quiz";
 
-    // if (process.env.NODE_ENV === "development") {
-    //   apiUrl = "http://localhost:8000/quiz";
-    // }
-
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -66,7 +62,7 @@ function App() {
             fontWeight: "bold",
           }}
         >
-          GPT-4 Powered Practice Tests
+          ChatGPT Powered Practice Tests
         </h6>
       </div>
       <div className="container-fluid px-5">

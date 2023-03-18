@@ -23,10 +23,7 @@ app.get('/', async (req, res) => {
 // Handle POST requests to the /quiz path
 app.post('/quiz', async (req, res) => {
   const { topics } = req.body;
-  //console.log("Received request with topics: ");
-  //console.log(topics);
   let result = await make_quiz(topics);
-  //console.log(result);
   res.json(result);
 });
 
