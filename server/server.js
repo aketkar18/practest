@@ -29,11 +29,11 @@ async function hello_world() {
 }
 
 async function make_quiz(topics) {
-  let prompt = "Create a college-level multiple choice quiz with " + topics.length + " questions. Respond with a clear nested list with the questions and their " + numChoices + " lettered answer choices, but the correct answer should be marked by adding a @ as its last char. After all question, start a new list for extremly short explanations for each question. The two lists you respond with should be clearly labeled Questions or Explanations. Topics:\n"
+  let prompt = "Create a college-level multiple choice quiz with " + topics.length + " questions. Respond with a clear nested list with the questions and their " + numChoices + " lettered answer choices. After all questions, start a new list for just the letters of the correct answer followed by a comma and a very short explanation. The two lists you respond with should be clearly labeled Questions or Answers and try not to make the same letter the correct answer too often. Topics:\n"
   for (let i = 0; i < topics.length; i++) {
     prompt += topics[i] + "\n";
   }
-  let sections = [];
+  let lines = [];
   const messages = [
     { role: 'user', content: prompt },
   ];
@@ -44,19 +44,19 @@ async function make_quiz(topics) {
   });
 
   const completion = response.data.choices[0].message.content;
-  sections = completion.split('\n');
+  lines = completion.split('\n');
 
   let practiceTest = {};
   let q = 1;
 
-  for (let i = 0; i < sections.length; i++) {
-    let section = sections[i].trim();
-    if (section == "") {
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].trim();
+    if (line == "") {
       continue;
     }
-    else if (section.endsWith('?')) {
+    else if (line.endsWith('?')) {
       practiceTest[q] = {
-        question: section.slice(3),
+        question: line.slice(3),
         choices: [],
         answer: "",
         explanation: ""
@@ -64,17 +64,14 @@ async function make_quiz(topics) {
       i++;
       var target = i + numChoices;
       for (i; i < target; i++) {
-        var choice = sections[i];
-        if (choice.includes("@")) {
-          choice = choice.replace("@", "");
-          practiceTest[q]["answer"] = choice[0];
-        }
-        practiceTest[q]["choices"].push(choice);
+        practiceTest[q]["choices"].push(lines[i]);
       }
       q++;
     }
-    else if (q > topics.length && !isNaN(Number(section[0]))) {
-      practiceTest[Number(section[0])]["explanation"] = section.slice(3);
+    else if (q > topics.length && !isNaN(Number(line[0]))) {
+      var a = Number(line[0]);
+      practiceTest[a]["answer"] = line[3];
+      practiceTest[a]["explanation"] = line.slice(5);
     }
   }
   return practiceTest;
