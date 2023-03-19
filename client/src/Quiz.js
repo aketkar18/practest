@@ -27,9 +27,8 @@ function Quiz({ quiz, onAnswer, clicked }) {
               {question.choices.map((choice, index) => {
                 var choices = ["a", "b", "c", "d", "e"];
                 const isCorrect = choices[index] === question.answer.toLowerCase();
-                const className = `answer-choice ${
-                  clicked[key - 1] ? (isCorrect ? "correct" : "incorrect") : ""
-                }`;
+                const className = `answer-choice ${clicked[key - 1] ? (isCorrect ? "correct" : "incorrect") : ""
+                  }`;
                 return (
                   <li
                     key={index}
@@ -42,8 +41,8 @@ function Quiz({ quiz, onAnswer, clicked }) {
               })}
             </ul>
             {explanations[key - 1] && (
-              <p className={`explanation ${correct[key-1] ? 'text-correct' : 'text-incorrect'}`}>
-              {explanations[key - 1].explanation}{explanations[key - 1]}
+              <p className={`explanation ${correct[key - 1] ? 'text-correct' : 'text-incorrect'}`}>
+                {explanations[key - 1].explanation}{explanations[key - 1]}
               </p>
             )}
           </div>
