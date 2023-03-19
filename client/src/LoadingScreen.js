@@ -6,16 +6,21 @@ function LoadingScreen() {
     useEffect(() => {
         const timeout = setTimeout(() => {
             setShowAlert(true);
-        }, 15000);
+        }, 20000);
         return () => {
             clearTimeout(timeout);
         };
     }, []);
 
-    if (showAlert) {
-        if (window.confirm("There was an unexpected error generating the quiz. Please try again.")) {
-            window.location.reload();
+    useEffect(() => {
+        if (showAlert) {
+            if (window.confirm("There was an unexpected error generating the quiz. Please try again.")) {
+                window.location.reload();
+            }
         }
+    }, [showAlert]);
+
+    if (showAlert) {
         return null;
     }
 
