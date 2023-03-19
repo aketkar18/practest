@@ -43,7 +43,7 @@ function App() {
 
     const quizData = await response.json();
     if (quizData.error) {
-      alert(quizData.error);
+      alert("There was an error generating the quiz. Please try again.");
       setIsLoading(false);
       return;
     }
