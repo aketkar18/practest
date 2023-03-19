@@ -6,7 +6,7 @@ function LoadingScreen() {
     useEffect(() => {
         const timeout = setTimeout(() => {
             setShowAlert(true);
-        }, 20000);
+        }, 30000);
         return () => {
             clearTimeout(timeout);
         };
