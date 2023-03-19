@@ -23,8 +23,14 @@ app.get('/', async (req, res) => {
 // Handle POST requests to the /quiz path
 app.post('/quiz', async (req, res) => {
   const { topics } = req.body;
-  let result = await make_quiz(topics);
-  res.json(result);
+  try{
+    let result = await make_quiz(topics);
+    res.json(result);
+  }
+  catch(err){
+    res.status(500).send({ error: err.message });
+    return;
+  }
 });
 
 

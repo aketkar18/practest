@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "./Form";
 import LoadingScreen from "./LoadingScreen";
 import Quiz from "./Quiz";
+import axios from "axios";
 
 function App() {
   const [topics, setTopics] = useState(["", "", ""]);
   const [quiz, setQuiz] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [clicked, setClicked] = useState([false, false, false]);
+
+  useEffect(() => {
+    axios.get('https://practest-server.herokuapp.com/')
+      .then(res => {
+        console.log('Server awoke successfully');
+      })
+      .catch(err => {
+        console.log('Error waking up server: ', err);
+      });
+  }, []);
 
   const handleChange = (event, index) => {
     const newTopics = [...topics];
@@ -31,6 +42,11 @@ function App() {
     });
 
     const quizData = await response.json();
+    if (quizData.error) {
+      alert(quizData.error);
+      setIsLoading(false);
+      return;
+    }
     setQuiz(quizData);
     setIsLoading(false);
   };
