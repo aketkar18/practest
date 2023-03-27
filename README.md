@@ -1,6 +1,6 @@
 # Practest - ChatGPT Powered Practice Tests
 
-Practest is a React and Express application that allows users to generate practice tests on any three topics. The application uses OpenAI's GPT-3.5-turbo model to create college-level multiple choice questions based on the provided topics.
+This reposititory contains both a React front-end and Express server application that allows users to generate practice tests on any three topics. The application uses OpenAI's GPT-3.5-turbo model to create college-level multiple choice questions based on the provided topics.
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ OPENAI_API_KEY=your_openai_api_key_here
 
 ```bash
 cd ..
-npm run server
+npm start
 ```
 
 5. In a new terminal, start the React application:
@@ -61,5 +61,5 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
 
