@@ -3,7 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from "./Form";
 import LoadingScreen from "./LoadingScreen";
 import Quiz from "./Quiz";
+import Header from "./Header";
 import axios from "axios";
+
 
 function App() {
   const [topics, setTopics] = useState(["", "", ""]);
@@ -61,26 +63,7 @@ function App() {
 
   return (
     <div>
-      <div className="header bg-dark py-5">
-        <h1
-          className="text-white text-center display-1"
-          style={{
-            fontFamily: "'Roboto', sans-serif",
-            fontWeight: "bold",
-          }}
-        >
-          Practest
-        </h1>
-        <h6
-          className="text-white text-center"
-          style={{
-            fontFamily: "'Roboto', sans-serif",
-            fontWeight: "bold",
-          }}
-        >
-          ChatGPT Powered Practice Tests
-        </h6>
-      </div>
+      <Header />
       <div className="container-fluid px-5">
         {isLoading && <LoadingScreen />}
         {!isLoading && !quiz && (
