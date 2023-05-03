@@ -29,7 +29,7 @@ async function hello_world() {
 }
 
 async function make_quiz(topics) {
-  let prompt = "Create a college-level multiple choice quiz with " + topics.length + " questions. Respond with a clear nested list with the questions and their " + numChoices + " answer choices (A-E). After all questions, start a new list for just the letters of the correct answer followed by a comma and a very short explanation. The two lists you respond with should be clearly labeled Questions or Answers and try not to make the same letter the correct answer too often. Topics:\n"
+  let prompt = "Create a difficult multiple choice quiz with " + topics.length + " questions. Respond with a clear nested list with the questions and their " + numChoices + " answer choices (A-E). After all questions, start a new list for just the letters of the correct answer followed by a comma and a very short explanation. The two lists you respond with should be clearly labeled Questions or Answers and try not to make the same letter the correct answer too often. Topics:\n"
   for (let i = 0; i < topics.length; i++) {
     prompt += topics[i] + "\n";
   }
@@ -41,7 +41,7 @@ async function make_quiz(topics) {
   while (numAttempts < 2) {
     try {
       const response = await openai.createChatCompletion({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages,
       });
 
