@@ -5,7 +5,7 @@ function Form({ topics, onSubmit, onChange }) {
         <div className="container mt-5">
             <div style={{ margin: "20px" }}>
                 <p className="text-center">
-                    Enter literally any three topics to generate a multiple choice quiz using the topics.
+                    Enter any three topics to generate a multiple choice quiz using the topics.
                 </p>
             </div>
             <form onSubmit={onSubmit}>

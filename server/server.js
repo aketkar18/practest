@@ -41,7 +41,7 @@ async function make_quiz(topics) {
   while (numAttempts < 2) {
     try {
       const response = await openai.createChatCompletion({
-        model: 'gpt-4',
+        model: 'gpt-3.5-turbo',
         messages,
       });
 
