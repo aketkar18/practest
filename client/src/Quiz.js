@@ -5,8 +5,6 @@ function Quiz({ quiz, onAnswer, clicked }) {
   const [explanations, setExplanations] = useState(Array(quizLength).fill(null));
   const [correct, setCorrect] = useState(Array(quizLength).fill(null));
 
-  console.log(quiz);
-
   const handleAnswerClick = (key, explanation, isCorrect) => {
     const newExplanations = [...explanations];
     const questionIndex = parseInt(key) - 1; // Convert key to index
