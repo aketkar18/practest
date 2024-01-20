@@ -34,7 +34,6 @@ function App() {
     setIsLoading(true);
 
     let apiUrl = "https://practest-server.herokuapp.com/quiz";
-    apiUrl = "http://localhost:8000/quiz";
 
     const response = await fetch(apiUrl, {
       method: "POST",
