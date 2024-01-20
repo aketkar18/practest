@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 
 function Quiz({ quiz, onAnswer, clicked }) {
-  const [explanations, setExplanations] = useState(Array(quiz.length).fill(null));
-  const [correct, setCorrect] = useState(Array(quiz.length).fill(null));
+  const quizLength = Object.keys(quiz).length;
+  const [explanations, setExplanations] = useState(Array(quizLength).fill(null));
+  const [correct, setCorrect] = useState(Array(quizLength).fill(null));
+
+  console.log(quiz);
 
   const handleAnswerClick = (key, explanation, isCorrect) => {
     const newExplanations = [...explanations];
-    newExplanations[key - 1] = explanation;
+    const questionIndex = parseInt(key) - 1; // Convert key to index
+    newExplanations[questionIndex] = explanation;
     setExplanations(newExplanations);
 
     const newCorrect = [...correct];
-    newCorrect[key - 1] = isCorrect;
+    newCorrect[questionIndex] = isCorrect;
     setCorrect(newCorrect);
 
-    onAnswer(key);
+    onAnswer(questionIndex + 1);
   };
 
   return (
     <div className="container mt-5 mx-auto px-3">
       <h3 className="text-center">Quiz</h3>
       <p className="text-center">
-        Note: Any mistakes in the questions or answers are due to ChatGPT's response.
+        Note: Any mistakes in the questions or answers are due to the GPT response.
       </p>
       {Object.keys(quiz).map((key) => {
         const question = quiz[key];
@@ -31,8 +35,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
               {question.choices.map((choice, index) => {
                 var choices = ["a", "b", "c", "d", "e"];
                 const isCorrect = choices[index] === question.answer.toLowerCase();
-                const className = `answer-choice ${clicked[key - 1] ? (isCorrect ? "correct" : "incorrect") : ""
-                  }`;
+                const className = `answer-choice ${clicked[parseInt(key) - 1] ? (isCorrect ? "correct" : "incorrect") : ""}`;
                 return (
                   <li
                     key={index}
@@ -44,9 +47,9 @@ function Quiz({ quiz, onAnswer, clicked }) {
                 );
               })}
             </ul>
-            {explanations[key - 1] && (
-              <p className={`explanation ${correct[key - 1] ? 'text-correct' : 'text-incorrect'}`}>
-                {explanations[key - 1].explanation}{explanations[key - 1]}
+            {explanations[parseInt(key) - 1] && (
+              <p className={`explanation ${correct[parseInt(key) - 1] ? 'text-correct' : 'text-incorrect'}`}>
+                {explanations[parseInt(key) - 1]}
               </p>
             )}
           </div>
