@@ -20,7 +20,7 @@ function Quiz({ quiz, onAnswer, clicked }) {
     <div className="container mt-5 mx-auto px-3">
       <h3 className="text-center">Quiz</h3>
       <p className="text-center">
-        Note: Any mistakes in the questions or answers are due to ChatGPT's response.
+        Note: Any mistakes in the questions or answers are due to the GPT response.
       </p>
       {Object.keys(quiz).map((key) => {
         const question = quiz[key];

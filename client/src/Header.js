@@ -19,7 +19,7 @@ function Header() {
           fontWeight: "bold",
         }}
       >
-        ChatGPT Powered Practice Tests
+        OpenAI GPT Powered Practice Tests
       </h6>
     </div>
   );
