@@ -29,6 +29,12 @@ async function make_quiz(topics) {
   for (let i = 0; i < topics.length; i++) {
     prompt += topics[i] + "\n";
   }
+  const moderation = await openai.moderations.create({
+    input: prompt
+  });
+  if (moderation.data.flagged) {
+    return;
+  }
   const completion = await openai.chat.completions.create({
     messages: [
       {
